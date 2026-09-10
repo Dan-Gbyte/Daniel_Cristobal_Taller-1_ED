@@ -11,9 +11,9 @@ Asignatura: Estructura de Datos
 * Carrera: ICCI
 
 **Integrante 2:**
-* Nombre: 
-* RUT:  
-* Carrera: 
+* Nombre: Cristóbal Isaías Espinoza Foix
+* RUT:  21.735.6121-1
+* Carrera: ICCI
 
 ## Descripción
 Sistema básico de gestión de pacientes del hospital Marmaja, desarrollado en C++. El proyecto implementa una simulación del flujo de pacientes utilizando programación orientada a objetos (POO), herencia, gestión de memoria dinámica, punteros, y estructuras de datos (Colas, Pilas y Listas Enlazadas).
