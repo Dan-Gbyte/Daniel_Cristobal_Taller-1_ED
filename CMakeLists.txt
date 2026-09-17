@@ -7,4 +7,9 @@ add_executable(T1
         main.cpp
         Paciente.cpp
         Cola.cpp
+        SistemaHospital.h
+        HospitalImplementado.cpp
+        HospitalImplementado.h
+        Pila.h
+        Nodo.h
 )
