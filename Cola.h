@@ -3,25 +3,25 @@
 
 #include "Nodo.h"
 
-// estructura de la cola
+// clase plantilla (template) para la estructura de datos Cola (FIFO: el primero en entrar es el primero en salir)
 template <typename T>
 class Cola {
 private:
-    Nodo<T>* frente; // Puntero al primer elemento de la cola
-    Nodo<T>* fin;    // Puntero al último elemento de la cola
+    Nodo<T>* frente; // apunta al primer elemento que ingresa
+    Nodo<T>* fin;    // apunta al último elemento ingresado
 
 public:
-    // inicia la cola vacia
+    // inicializa la cola vacía
     Cola() : frente(nullptr), fin(nullptr) {}
 
-    // el destructor libera memoria de todos los nodos
+    // vacía la cola liberando los nodos de la memoria dinámica / destructor
     ~Cola() {
         while (!estaVacia()) {
             desencolar();
         }
     }
 
-    // comprueba si la cola no tiene elementos
+    // retorna true si la cola no tiene elementos
     bool estaVacia() const { return frente == nullptr; }
 
     // agrega un nuevo elemento al final de la cola
@@ -36,18 +36,16 @@ public:
         }
     }
 
-    // extrae y retorna el elemento que esta al frente de la cola
     T desencolar() {
         if (estaVacia()) return nullptr;
         Nodo<T>* aux = frente;
         T dato = aux->dato;
         frente = frente->siguiente;
         if (frente == nullptr) fin = nullptr;
-        delete aux; // libera el nodo sacado
+        delete aux;
         return dato;
     }
 
-    // retorna el nodo del frente para poder recorrer la cola sin modificar nada
     Nodo<T>* getFrente() const { return frente; }
 };
 

@@ -9,19 +9,21 @@
 
 using namespace std;
 
-// lista de departamentos
 HospitalImplementado::HospitalImplementado() : listaServicios(nullptr) {
     inicializarServicios();
 }
 
-// destructor
+//destructor para usar menos memoria
 HospitalImplementado::~HospitalImplementado() {
+    // libera memoria dinam de la cola
     while (!colaEspera.estaVacia()) {
         delete colaEspera.desencolar();
     }
+    // libera memoria dinam del historial
     while (!historialAtenciones.estaVacia()) {
         delete historialAtenciones.desapilar();
     }
+    // libera la linked list de los servicios
     Servicio* actual = listaServicios;
     while (actual != nullptr) {
         Servicio* aux = actual;
@@ -30,7 +32,7 @@ HospitalImplementado::~HospitalImplementado() {
     }
 }
 
-// inicializa los 8 deptos que se piden
+// crea e inserta los 8 servicios solicitados
 void HospitalImplementado::inicializarServicios() {
     string nombres[] = {
         "Urgencias", "Medicina General", "Cardiologia", "Neurologia",
@@ -49,7 +51,7 @@ void HospitalImplementado::inicializarServicios() {
     }
 }
 
-// para buscar los servicios con listas enlazadas (linkedlists)
+// recorre la lista para buscar algo especifico
 Servicio* HospitalImplementado::buscarServicio(const string& nombre) {
     Servicio* aux = listaServicios;
     while (aux != nullptr) {
@@ -59,7 +61,7 @@ Servicio* HospitalImplementado::buscarServicio(const string& nombre) {
     return nullptr;
 }
 
-// para leer el txt, el bool es por si acaso
+// para leer el txt con un bool (lo k hiciste tu dani)
 bool HospitalImplementado::leerPacientes() {
     ifstream archivo("pacientes.txt");
     if (!archivo.is_open()) return false;
@@ -71,7 +73,7 @@ bool HospitalImplementado::leerPacientes() {
         char id[50], nombre[50], servicio[50];
         int edad = 0;
 
-        // punteros
+        // para recorrer el arreglo con caracteres con el char* p
         char* p = linea;
         int campo = 0, idx = 0;
 
@@ -96,10 +98,11 @@ bool HospitalImplementado::leerPacientes() {
                     else if (campo == 3) servicio[idx++] = *p;
                 }
             }
-            p++;
+            p++; // avanza la dirección de memoria del puntero
         }
         servicio[idx] = '\0';
 
+        // insercion de la cola fifo
         if (campo >= 3) {
             Paciente* paciente = nullptr;
             string sServicio = servicio;
@@ -145,14 +148,14 @@ string HospitalImplementado::atenderPacientes(int cantidad) {
             break;
         }
 
-        // Sacar de la cola (FIFO)
+        // desencola el paciente (FIFO)
         Paciente* p = colaEspera.desencolar();
         salida += "ID: " + p->getId() + "\n";
         salida += "Nombre: " + p->getNombre() + "\n";
         salida += "Edad: " + to_string(p->getEdad()) + "\n";
         salida += "Servicio: " + p->getServicio() + "\n";
 
-        // Mover al departamento correspondiente
+        // asigna al paciente a su depto
         Servicio* s = buscarServicio(p->getServicio());
         if (s != nullptr) {
             s->agregarPaciente(p);
@@ -163,7 +166,7 @@ string HospitalImplementado::atenderPacientes(int cantidad) {
             if (gen) gen->agregarPaciente(p);
         }
 
-        // Guardar en la pila de historial
+        // apila el paciente a la lista de atenciones (LIFO)
         historialAtenciones.apilar(p);
         salida += "-----------------------------\n";
     }
@@ -190,6 +193,7 @@ string HospitalImplementado::verDepartamento(int id) {
     Servicio* aux = listaServicios;
     int i = 1;
 
+    // avanza en la lista hasta la posicion del departamento indicado por el id (de 1 hasta el 8)
     while (aux != nullptr && i < id) {
         aux = aux->getSiguiente();
         i++;
@@ -206,10 +210,11 @@ string HospitalImplementado::verDepartamento(int id) {
     return salida;
 }
 
-// esta funcion solo requiere un metodo 
+// esta fucnion solo requiere un metodo
 string HospitalImplementado::verHistorial() {
     string salida = "=== HISTORIAL DE ULTIMAS ATENCIONES DEL HOSPITAL ===\n";
 
+    // recorre la Pila desde el Top
     Nodo<Paciente*>* aux = historialAtenciones.getTope();
     if (aux == nullptr) {
         salida += "No hay atenciones en el historial.\n";

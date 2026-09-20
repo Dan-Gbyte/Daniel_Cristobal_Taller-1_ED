@@ -1,18 +1,18 @@
 #include "Servicio.h"
-#include <iostream>
+#include <sstream>
 
-// asigna el departamento y asigna una sub lista vacía
+// constructor: configura el nombre e inicializa los punteros en el nullptr
 Servicio::Servicio(std::string nombre)
     : nombreServicio(nombre), listaPacientes(nullptr), siguienteServicio(nullptr) {}
 
-// libera la memoria dinámica de los pacientes y los nodos de este departamento, basicamente un destructor
+// recorre la sub-lista enlazada liberando tanto los objetos "Paciente" como los Nodos / destructor
 Servicio::~Servicio() {
     Nodo<Paciente*>* actual = listaPacientes;
     while (actual != nullptr) {
         Nodo<Paciente*>* aux = actual;
         actual = actual->siguiente;
-        delete aux->dato;
-        delete aux;
+        delete aux->dato; // libera el objeto Paciente dinámico
+        delete aux;       // libera el nodo de la lista
     }
 }
 
@@ -20,7 +20,7 @@ std::string Servicio::getNombre() const { return nombreServicio; }
 Servicio* Servicio::getSiguiente() const { return siguienteServicio; }
 void Servicio::setSiguiente(Servicio* sig) { siguienteServicio = sig; }
 
-// inserta un paciente al final de la sub lista enlazada del depto
+// agrega un paciente al final de la sublista del depto
 
 void Servicio::agregarPaciente(Paciente* p) {
     Nodo<Paciente*>* nuevo = new Nodo<Paciente*>(p);
@@ -35,8 +35,7 @@ void Servicio::agregarPaciente(Paciente* p) {
     }
 }
 
-// cuenta la cantidad de pacientes que están actualmente en el depto
-
+// para contar la cant de pacientes del depto
 int Servicio::getCantidadPacientes() const {
     int cont = 0;
     Nodo<Paciente*>* aux = listaPacientes;
@@ -47,16 +46,15 @@ int Servicio::getCantidadPacientes() const {
     return cont;
 }
 
-// imprime en consola los pacientes asignados a este servicio
-
-void Servicio::mostrarPacientes() const {
+std::string Servicio::obtenerTextoPacientes() const {
     if (listaPacientes == nullptr) {
-        std::cout << "No hay pacientes en este servicio." << std::endl;
-        return;
+        return "No hay pacientes en este servicio.\n";
     }
+    std::string resultado = "";
     Nodo<Paciente*>* aux = listaPacientes;
     while (aux != nullptr) {
-        std::cout << aux->dato->getNombre() << " (" << aux->dato->getEdad() << ")" << std::endl;
+        resultado += aux->dato->getNombre() + " (" + std::to_string(aux->dato->getEdad()) + " anos)\n";
         aux = aux->siguiente;
     }
+    return resultado;
 }

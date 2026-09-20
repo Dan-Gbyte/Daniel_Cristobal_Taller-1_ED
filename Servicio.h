@@ -5,24 +5,27 @@
 #include "Paciente.h"
 #include "Nodo.h"
 
-// departamento o servicio del hospital
+// clase que representa un departamento del hospital
 class Servicio {
 private:
-    std::string nombreServicio;
-    Nodo<Paciente*>* listaPacientes; // una linked list con los pacientes asignados a este servicio
-    Servicio* siguienteServicio;     // el puntero al siguiente departamento o servicio
+    std::string nombreServicio;       // nombre del depto
+    Nodo<Paciente*>* listaPacientes;  // sublista enlazada con los pacientes asignados al servicio
+    Servicio* siguienteServicio;      // puntero al siguiente departamento de la lista
 
 public:
+    // Constructor y Destructor
     Servicio(std::string nombre);
     ~Servicio();
 
+    // Getters y Setters
     std::string getNombre() const;
     Servicio* getSiguiente() const;
     void setSiguiente(Servicio* sig);
 
+    // métodos para la gestión interna de pacientes
     void agregarPaciente(Paciente* p);
-    void mostrarPacientes() const;
     int getCantidadPacientes() const;
+    std::string obtenerTextoPacientes() const;
 };
 
 #endif
