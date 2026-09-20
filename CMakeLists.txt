@@ -12,4 +12,8 @@ add_executable(T1
         HospitalImplementado.h
         Pila.h
         Nodo.h
+        PacienteUrgencia.cpp
+        PacienteUrgencia.h
+        Servicio.cpp
+        Servicio.h
 )

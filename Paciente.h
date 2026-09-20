@@ -4,7 +4,7 @@
 #include <string>
 
 class Paciente {
-private:
+protected:
     std::string id;
     std::string nombre;
     int edad;
@@ -12,8 +12,8 @@ private:
 
 public:
     Paciente(std::string id, std::string nombre, int edad, std::string servicio);
-    
-    // Métodos de acceso (Getters)
+    virtual ~Paciente();
+
     std::string getId() const;
     std::string getNombre() const;
     int getEdad() const;

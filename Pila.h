@@ -1,64 +1,47 @@
-//
-// Created by danux on 17-09-2026.
-//
+#ifndef PILA_H
+#define PILA_H
 
-#ifndef DANIEL_CRISTOBAL_TALLER_1_ED_PILA_H
-#define DANIEL_CRISTOBAL_TALLER_1_ED_PILA_H
 #include "Nodo.h"
 
+// estructura de pila o LIFO (last in, first out)
 template <typename T>
 class Pila {
+private:
+    Nodo<T>* tope; // Puntero al elemento superior de la pila
 
 public:
-    Pila() {
-        cima = nullptr;
-    }
+    // inicia la pila vacía
+    Pila() : tope(nullptr) {}
+
+    // destructor
     ~Pila() {
-
+        while (!estaVacia()) {
+            desapilar();
+        }
     }
 
-    void empujar(T* dato) { //insertar al final
-        Nodo anterior = cima;
+    // comprueba si la pila está vacía
+    bool estaVacia() const { return tope == nullptr; }
+
+    // agrega un elemento en el tope de la pila
+    void apilar(T dato) {
         Nodo<T>* nuevo = new Nodo<T>(dato);
-
-        cima->setSiguiente(nuevo);
-        cima = nuevo;
+        nuevo->siguiente = tope;
+        tope = nuevo;
     }
 
-    T* mirar() { // mirar el último
-        return cima->getValor();
-    }
-    T* pop() { // Extraer el último, lo elimina
-        T* salida = cima->getValor();
-
-        return salida;
-    }
-
-    bool estaVacia() {
-        return cima == nullptr;
+    // remueve y retorna el elemento que está más arriba
+    T desapilar() {
+        if (estaVacia()) return nullptr;
+        Nodo<T>* aux = tope;
+        T dato = aux->dato;
+        tope = tope->siguiente;
+        delete aux;
+        return dato;
     }
 
-    std::string mostrar() {
-        std::string salida = "";
-        return salida;
-    }
-    int tamano() {
-        if (cima == nullptr) {
-            return 0;
-        }
-
-        int contador = 1;
-        while (cima->getSiguiente() != nullptr) {
-            contador++;
-        }
-        return contador;
-    }
-
-
-private:
-    Nodo<T>* cima; // el final, pero me gusta cima
-
+    // retorna el nodo superior para ver el historial
+    Nodo<T>* getTope() const { return tope; }
 };
 
-
-#endif //DANIEL_CRISTOBAL_TALLER_1_ED_PILA_H
+#endif

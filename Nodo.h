@@ -1,38 +1,14 @@
-//
-// Created by danux on 17-09-2026.
-//
-
-#ifndef DANIEL_CRISTOBAL_TALLER_1_ED_NODO_H
-#define DANIEL_CRISTOBAL_TALLER_1_ED_NODO_H
-
+#ifndef NODO_H
+#define NODO_H
 
 template <typename T>
 class Nodo {
-private:
-    T valor;
-    Nodo<T>* siguiente;
-
 public:
-    // Constructor
-    Nodo(T valor) {
-        this->valor = valor;
-        this->siguiente = nullptr;
-    }
-    ~Nodo() {}
+    T dato;               // guarda la información seria cm el puntero
+    Nodo<T>* siguiente;   // puntero al siguiente nodo de la estructura
 
-    T getValor() {
-        return this->valor;
-    }
-
-    Nodo<T>* getSiguiente() {
-        return this->siguiente;
-    }
-
-    void setSiguiente(Nodo<T>* siguiente) {
-        this->siguiente = siguiente;
-    }
-
+    // recibe el dato y deja el puntero siguiente en nulo
+    Nodo(T dato) : dato(dato), siguiente(nullptr) {}
 };
 
-
-#endif //DANIEL_CRISTOBAL_TALLER_1_ED_NODO_H
+#endif
