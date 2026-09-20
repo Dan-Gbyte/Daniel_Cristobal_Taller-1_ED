@@ -76,16 +76,29 @@ bool HospitalImplementado::leerPacientes() {
         // para recorrer el arreglo con caracteres con el char* p
         char* p = linea;
         int campo = 0, idx = 0;
+        bool pacienteValido = true;
+
 
         while (*p != '\0' && *p != '\r' && *p != '\n') {
             if (*p == ';') {
+
+                if (idx == 0) {
+                    pacienteValido = false;
+                    break;
+                }
+
                 if (campo == 0) id[idx] = '\0';
                 else if (campo == 1) nombre[idx] = '\0';
                 else if (campo == 2) {
                     edad = 0;
                     for (int i = 0; i < idx; i++) {
                         char c = linea[p - linea - idx + i];
-                        if (c >= '0' && c <= '9') edad = edad * 10 + (c - '0');
+                        if (c >= '0' && c <= '9') {
+                            edad = edad * 10 + (c - '0');
+                        } else {
+                            pacienteValido = false;
+                            break;
+                        }
                     }
                 }
                 campo++;
@@ -98,12 +111,31 @@ bool HospitalImplementado::leerPacientes() {
                     else if (campo == 3) servicio[idx++] = *p;
                 }
             }
+            if (!pacienteValido) {
+                break;
+            }
             p++; // avanza la dirección de memoria del puntero
         }
+
+        if (idx == 0 || campo != 3) {
+            pacienteValido = false;
+        }
+
         servicio[idx] = '\0';
 
+        if (pacienteValido) {
+            string sServicio = servicio;
+            if (sServicio != "Urgencias" && sServicio != "Medicina General" &&
+                sServicio != "Cardiologia" && sServicio != "Neurologia" &&
+                sServicio != "Traumatologia" && sServicio != "Cirugia" &&
+                sServicio != "Pediatria" && sServicio != "Hospitalizacion") {
+                pacienteValido = false;
+            }
+
+        }
+
         // insercion de la cola fifo
-        if (campo >= 3) {
+        if (pacienteValido) {
             Paciente* paciente = nullptr;
             string sServicio = servicio;
 

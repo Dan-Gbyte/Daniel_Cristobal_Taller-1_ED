@@ -2,6 +2,7 @@
 #define COLA_H
 
 #include "Nodo.h"
+#include "NodoPaciente.h"
 
 // clase plantilla (template) para la estructura de datos Cola (FIFO: el primero en entrar es el primero en salir)
 template <typename T>
@@ -47,6 +48,24 @@ public:
     }
 
     Nodo<T>* getFrente() const { return frente; }
+
+    // Mostrar los pacientes en espera por consola
+    /*void Cola::mostrar() const {
+        if (estaVacia()) {
+            std::cout << "No hay pacientes en espera." << std::endl;
+            return;
+        }
+
+        NodoPaciente* actual = frente;
+        int i = 1;
+        while (actual != nullptr) {
+            std::cout << i << ". " << actual->paciente->getId() << " "
+                      << actual->paciente->getNombre() << std::endl;
+            actual = actual->siguiente;
+            i++;
+        }
+    }
+    */
 };
 
 #endif

@@ -8,7 +8,13 @@ int main() {
     SistemaHospital* sistema = new HospitalImplementado();
 
     // cargar pacientes desde el archivo al iniciar
-    sistema->leerPacientes();
+    bool inicio = sistema->leerPacientes();
+
+    if (!inicio) {
+        cout << "No se pudo leer pacientes.txt\nfinalizando programa...";
+        delete sistema;
+        return 1;
+    }
 
     int opcion = 0;
 
