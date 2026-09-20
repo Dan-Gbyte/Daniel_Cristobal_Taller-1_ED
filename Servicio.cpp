@@ -11,7 +11,7 @@ Servicio::~Servicio() {
     while (actual != nullptr) {
         Nodo<Paciente*>* aux = actual;
         actual = actual->siguiente;
-        delete aux->dato; // libera el objeto Paciente dinámico
+        //delete aux->dato; // libera el objeto Paciente dinámico -> HospitalImplementado lo hace y esto intenta hacerlo 2 veces
         delete aux;       // libera el nodo de la lista
     }
 }
