@@ -20,7 +20,7 @@ int main() {
 
     while (opcion != 4) {
         cout << "=== HOSPITAL MARMAJA ===\n";
-        cout << "1. Atender paciente\n";
+        cout << "1. Atender pacientes\n";
         cout << "2. Ver departamento\n";
         cout << "3. Revisar historial de atención\n";
         cout << "4. Salir\n\n";

@@ -2,7 +2,6 @@
 #define COLA_H
 
 #include "Nodo.h"
-#include "NodoPaciente.h"
 
 // clase plantilla (template) para la estructura de datos Cola (FIFO: el primero en entrar es el primero en salir)
 template <typename T>

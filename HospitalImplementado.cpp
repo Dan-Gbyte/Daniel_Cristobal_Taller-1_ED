@@ -257,6 +257,7 @@ string HospitalImplementado::verHistorial() {
         salida += "Nombre: " + aux->dato->getNombre()
                + " | Edad: " + to_string(aux->dato->getEdad())
                + " | Departamento: " + aux->dato->getServicio() + "\n";
+        salida += "--\n";
         aux = aux->siguiente;
     }
     return salida;
